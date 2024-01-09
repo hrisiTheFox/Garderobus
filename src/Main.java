@@ -5,4 +5,10 @@ public class Main {
     public static void main(String args[]){
         AddNewFrame addNewFrame = new AddNewFrame();
     }
+
+    public static void displayClothes(){
+        for(Item item : clothes){
+            System.out.println(item.toString());
+        }
+    }
 }

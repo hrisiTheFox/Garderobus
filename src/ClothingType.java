@@ -1,4 +1,4 @@
-public enum Type {
+public enum ClothingType {
     SHIRT,
     PANTS,
     SKIRT,

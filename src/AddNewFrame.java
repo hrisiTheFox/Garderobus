@@ -4,7 +4,10 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Arrays;
 
 public class AddNewFrame extends JFrame {
 
@@ -12,12 +15,14 @@ public class AddNewFrame extends JFrame {
     private static final Color PINK_BRIGHTER = new Color(255, 182, 193);
     private static final Color PINK_DARKER = new Color(255, 105, 180);
 
+    private Item newitem;
+
     public AddNewFrame() {
         setTitle("Custom UI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(BEIGE); // Set the frame's background color to beige
         setLayout(new BorderLayout(100, 0)); // Adding some space between components
-        setSize(1200, 1600); // Adjust the size of the frame
+        setSize(1200, 900); // Adjust the size of the frame
 
         // Gradient button panel
         JPanel gradientPanel = createGradientPanel();
@@ -36,6 +41,7 @@ public class AddNewFrame extends JFrame {
 
         // Display the frame
         setVisible(true);
+        newitem = new Item();
     }
 
     private JPanel createGradientPanel() {
@@ -82,7 +88,8 @@ public class AddNewFrame extends JFrame {
         addItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Main.clothes.add(newitem);
+                Main.displayClothes();
             }
         });
 
@@ -92,12 +99,16 @@ public class AddNewFrame extends JFrame {
     private JPanel createCheckBoxesPanel() {
         JPanel checkboxesPanel = new JPanel(new GridLayout(2, 2, 10, 10));
         checkboxesPanel.setBackground(BEIGE);
-        checkboxesPanel.add(createCheckBoxPanelVertical("Color:", new String[]{"black", "white", "beige", "blue", "pink", "red", "green", "yellow", "orange"}));
-        checkboxesPanel.add(createCheckBoxPanel("Type:", new String[]{"shirt", "pants", "skirt", "shoes", "dress", "outwear", "accessorie", "leggings"}, 2));
-        checkboxesPanel.add(createCheckBoxPanelVertical("Occasion:", new String[]{"casual", "formal", "cozy", "going out"}));
-        checkboxesPanel.add(createCheckBoxPanelVertical("Weather:", new String[]{"warm", "cold", "doesn't matter"}));
+        checkboxesPanel.add(createCheckBoxPanelVertical("Color:", getNames(Colour.class),0));
+        checkboxesPanel.add(createCheckBoxPanel("Type:", getNames(ClothingType.class), 2,1));
+        checkboxesPanel.add(createCheckBoxPanelVertical("Occasion:", getNames(Occasion.class),2));
+        checkboxesPanel.add(createCheckBoxPanelVertical("Weather:", getNames(Weather.class),3));
 
         return checkboxesPanel;
+    }
+
+    public static String[] getNames(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 
     private void styleAddItemButton(JButton button) {
@@ -143,7 +154,7 @@ public class AddNewFrame extends JFrame {
 
     // The following methods are defined within the class scope:
 
-    private JPanel createCheckBoxPanelVertical(String title, String[] options) {
+    private JPanel createCheckBoxPanelVertical(String title, String[] options, int propId) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createTitledBorder(title));
@@ -151,12 +162,34 @@ public class AddNewFrame extends JFrame {
         for (String option : options) {
             JCheckBox checkBox = new JCheckBox(option);
             checkBox.setBackground(BEIGE);
+            checkBox.addItemListener(new ItemListener() {
+
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if(e.getStateChange() == ItemEvent.SELECTED){
+                        switch (propId){
+                            case 0:
+                                newitem.colour = Colour.valueOf(option);
+                                break;
+                            case 1:
+                                newitem.type = ClothingType.valueOf(option);
+                                break;
+                            case 2:
+                                newitem.occasion = Occasion.valueOf(option);
+                                break;
+                            case 3:
+                                newitem.weather = Weather.valueOf(option);
+                                break;
+                        }
+                    }
+                }
+            });
             panel.add(checkBox);
         }
         return panel;
     }
 
-    private JPanel createCheckBoxPanel(String title, String[] options, int columns) {
+    private JPanel createCheckBoxPanel(String title, String[] options, int columns, int propId) {
         JPanel panel = new JPanel(new GridLayout(0, columns, 5, 5));
         panel.setBorder(BorderFactory.createTitledBorder(title));
         panel.setBackground(BEIGE);
@@ -164,6 +197,29 @@ public class AddNewFrame extends JFrame {
             JCheckBox checkBox = new JCheckBox(option);
             checkBox.setBackground(BEIGE);
             panel.add(checkBox);
+
+            checkBox.addItemListener(new ItemListener() {
+
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if(e.getStateChange() == ItemEvent.SELECTED){
+                        switch (propId){
+                            case 0:
+                                newitem.colour = Colour.valueOf(option);
+                                break;
+                            case 1:
+                                newitem.type = ClothingType.valueOf(option);
+                                break;
+                            case 2:
+                                newitem.occasion = Occasion.valueOf(option);
+                                break;
+                            case 3:
+                                newitem.weather = Weather.valueOf(option);
+                                break;
+                        }
+                    }
+                }
+            });
         }
         return panel;
     }
