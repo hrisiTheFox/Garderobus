@@ -1,4 +1,5 @@
 public enum Weather {
     WARM,
-    COLD
+    COLD,
+    DOES_NOT_MATTER
 }
