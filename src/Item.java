@@ -3,15 +3,17 @@ public class Item {
     public ClothingType type;
     public Weather weather;
     public Colour colour;
+    public String photoPath;
 
     public Item() {
     }
 
-    public Item(Occasion occasion, ClothingType type, Weather weather, Colour colour) {
+    public Item(Occasion occasion, ClothingType type, Weather weather, Colour colour, String photoPath) {
         this.occasion = occasion;
         this.type = type;
         this.weather = weather;
         this.colour = colour;
+        this.photoPath = photoPath;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class Item {
                 ", type=" + type +
                 ", weather=" + weather +
                 ", colour=" + colour +
+                ", photoPath=" + photoPath +
                 '}';
     }
 }

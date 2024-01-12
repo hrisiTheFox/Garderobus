@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -7,6 +8,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
+import java.awt.image.RescaleOp;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class AddNewFrame extends JFrame {
@@ -14,6 +25,9 @@ public class AddNewFrame extends JFrame {
     private static final Color BEIGE = new Color(245, 245, 220); // Beige color for backgrounds
     private static final Color PINK_BRIGHTER = new Color(255, 182, 193);
     private static final Color PINK_DARKER = new Color(255, 105, 180);
+
+    private static Path resourceDirectory = Paths.get("resources");
+    private static String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
     private Item newitem;
 
@@ -59,9 +73,48 @@ public class AddNewFrame extends JFrame {
         pinkButton.setFocusPainted(false);
         pinkButton.setContentAreaFilled(false);
         pinkButton.setUI(new PinkButtonUI());
+        pinkButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                JFileChooser fileChooser = new JFileChooser(new File(absolutePath));
+                fileChooser.addChoosableFileFilter(new ImageFilterMy());
+                fileChooser.setAcceptAllFileFilterUsed(false);
+
+                int option = fileChooser.showOpenDialog(AddNewFrame.this);
+                if(option == JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    //label.setText("File Selected: " + file.getName());
+                    try {
+                        newitem.photoPath = absolutePath+"\\"+file.getName();
+
+                        BufferedImage bimg = ImageIO.read(new File(newitem.photoPath));
+                        int width          = bimg.getWidth();
+                        int height         = bimg.getHeight();
+
+                        ImageIcon imageIcon = new ImageIcon(absolutePath+"\\"+file.getName()); // load the image to a imageIcon
+                        System.out.println(newitem.photoPath);
+                        Image image = imageIcon.getImage(); // transform it
+                        Image newimg = image;
+                        if(width<height)
+                            newimg = image.getScaledInstance(300, Math.round(height*300/width),  Image.SCALE_DEFAULT); // scale it the smooth way
+                        else
+                            newimg = image.getScaledInstance(Math.round(width*600/height), 600,  Image.SCALE_DEFAULT); // scale it the smooth way
+                        imageIcon = new ImageIcon(newimg);
+                        pinkButton.setUI(new BasicButtonUI());
+                        pinkButton.setIcon( imageIcon );
+                    } catch (Exception ex) {
+                        // TODO Auto-generated catch block
+                        ex.printStackTrace();
+                    }
+                }else{
+                    //label.setText("Open command canceled");
+                }
+            }
+        });
 
         // Placeholder for adding an image icon to the button
-        ImageIcon icon = new ImageIcon("C:\\Users\\PC1\\IdeaProjects\\AddItem\\resources\\plus.png"); // Replace with your image path
+        ImageIcon icon = new ImageIcon("resources\\plus.png"); // Replace with your image path
         pinkButton.setIcon(icon);
         // If you want the icon to be smaller than the button and centered, consider using a JLabel to hold the icon
 
@@ -144,10 +197,21 @@ public class AddNewFrame extends JFrame {
         public void paint(Graphics g, JComponent c) {
             super.paint(g, c);
             Graphics2D g2d = (Graphics2D) g.create();
+
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(absolutePath + "\\plus.png"));
+                BufferedImage bi = new
+                        BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+                g2d.drawImage(bi, 0, 0, 100, 100, 100, 100, 100, 100, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             GradientPaint gp = new GradientPaint(0, 0, PINK_BRIGHTER, 0, c.getHeight(), PINK_DARKER);
             g2d.setPaint(gp);
             g2d.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), 30, 30);
+
             g2d.dispose();
         }
     }
@@ -167,19 +231,11 @@ public class AddNewFrame extends JFrame {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if(e.getStateChange() == ItemEvent.SELECTED){
-                        switch (propId){
-                            case 0:
-                                newitem.colour = Colour.valueOf(option);
-                                break;
-                            case 1:
-                                newitem.type = ClothingType.valueOf(option);
-                                break;
-                            case 2:
-                                newitem.occasion = Occasion.valueOf(option);
-                                break;
-                            case 3:
-                                newitem.weather = Weather.valueOf(option);
-                                break;
+                        switch (propId) {
+                            case 0 -> newitem.colour = Colour.valueOf(option);
+                            case 1 -> newitem.type = ClothingType.valueOf(option);
+                            case 2 -> newitem.occasion = Occasion.valueOf(option);
+                            case 3 -> newitem.weather = Weather.valueOf(option);
                         }
                     }
                 }
