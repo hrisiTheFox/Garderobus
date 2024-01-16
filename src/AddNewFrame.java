@@ -49,6 +49,7 @@ public class AddNewFrame extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
         mainPanel.add(gradientPanel);
         mainPanel.add(rightPanel);
+        mainPanel.add(rightPanel);
         mainPanel.setBackground(BEIGE); // Setting the beige color for the main panel
 
         getContentPane().add(mainPanel);
@@ -68,7 +69,7 @@ public class AddNewFrame extends JFrame {
         JButton pinkButton = new JButton("Choose image");
         pinkButton.setFont(new Font("Arial", Font.BOLD, 16));
         pinkButton.setForeground(Color.WHITE);
-        pinkButton.setPreferredSize(new Dimension(300, 600)); // Size of the pink area, adjust as needed
+        pinkButton.setPreferredSize(new Dimension(500, 800)); // Size of the pink area, adjust as needed
         pinkButton.setBorder(new RoundedBorder(30)); // Rounded border with a radius
         pinkButton.setFocusPainted(false);
         pinkButton.setContentAreaFilled(false);
@@ -86,20 +87,19 @@ public class AddNewFrame extends JFrame {
                     File file = fileChooser.getSelectedFile();
                     //label.setText("File Selected: " + file.getName());
                     try {
-                        newitem.photoPath = absolutePath+"\\"+file.getName();
+                        newitem.setPhotoPath(absolutePath+"\\"+file.getName());
 
-                        BufferedImage bimg = ImageIO.read(new File(newitem.photoPath));
+                        BufferedImage bimg = ImageIO.read(new File(newitem.getPhotoPath()));
                         int width          = bimg.getWidth();
                         int height         = bimg.getHeight();
 
                         ImageIcon imageIcon = new ImageIcon(absolutePath+"\\"+file.getName()); // load the image to a imageIcon
-                        System.out.println(newitem.photoPath);
                         Image image = imageIcon.getImage(); // transform it
                         Image newimg = image;
                         if(width<height)
-                            newimg = image.getScaledInstance(300, Math.round(height*300/width),  Image.SCALE_DEFAULT); // scale it the smooth way
+                            newimg = image.getScaledInstance(500, Math.round(height*500/width),  Image.SCALE_DEFAULT);
                         else
-                            newimg = image.getScaledInstance(Math.round(width*600/height), 600,  Image.SCALE_DEFAULT); // scale it the smooth way
+                            newimg = image.getScaledInstance(Math.round(width*800/height), 800,  Image.SCALE_DEFAULT);
                         imageIcon = new ImageIcon(newimg);
                         pinkButton.setUI(new BasicButtonUI());
                         pinkButton.setIcon( imageIcon );
@@ -232,10 +232,10 @@ public class AddNewFrame extends JFrame {
                 public void itemStateChanged(ItemEvent e) {
                     if(e.getStateChange() == ItemEvent.SELECTED){
                         switch (propId) {
-                            case 0 -> newitem.colour = Colour.valueOf(option);
-                            case 1 -> newitem.type = ClothingType.valueOf(option);
-                            case 2 -> newitem.occasion = Occasion.valueOf(option);
-                            case 3 -> newitem.weather = Weather.valueOf(option);
+                            case 0 -> newitem.setColour(Colour.valueOf(option));
+                            case 1 -> newitem.setType(ClothingType.valueOf(option));
+                            case 2 -> newitem.setOccasion(Occasion.valueOf(option));
+                            case 3 -> newitem.setWeather(Weather.valueOf(option));
                         }
                     }
                 }
@@ -259,19 +259,11 @@ public class AddNewFrame extends JFrame {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if(e.getStateChange() == ItemEvent.SELECTED){
-                        switch (propId){
-                            case 0:
-                                newitem.colour = Colour.valueOf(option);
-                                break;
-                            case 1:
-                                newitem.type = ClothingType.valueOf(option);
-                                break;
-                            case 2:
-                                newitem.occasion = Occasion.valueOf(option);
-                                break;
-                            case 3:
-                                newitem.weather = Weather.valueOf(option);
-                                break;
+                        switch (propId) {
+                            case 0 -> newitem.setColour(Colour.valueOf(option));
+                            case 1 -> newitem.setType(ClothingType.valueOf(option));
+                            case 2 -> newitem.setOccasion(Occasion.valueOf(option));
+                            case 3 -> newitem.setWeather(Weather.valueOf(option));
                         }
                     }
                 }
