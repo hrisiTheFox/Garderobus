@@ -1,5 +1,3 @@
-package frames;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -24,6 +22,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.UIManager;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public class StartFrame extends JFrame {
@@ -41,11 +41,9 @@ public class StartFrame extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
-
-
         JLabel lblIcon = new JLabel("");
         lblIcon.setPreferredSize(new Dimension(120, 120));
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("ressources/garderobus.png").getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("resources/garderobus.png").getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT));
         contentPane.setLayout(null);
         lblIcon.setIcon(imageIcon);
         lblIcon.setBounds(34,10,120,120);
@@ -58,45 +56,101 @@ public class StartFrame extends JFrame {
         contentPane.add(lblNewLabel_1);
 
 
-
         JLabel lblNewLabel = new JLabel("Generate outfit");
-        lblNewLabel.setFont(new Font("Cambria", Font.BOLD, 31));
-        lblNewLabel.setBounds(49, 160, 410, 112);
+        lblNewLabel.setFont(new Font("Candara", Font.BOLD, 31));
+        lblNewLabel.setForeground(Color.WHITE);
+        lblNewLabel.setBounds(75, 150, 410, 112);
         contentPane.add(lblNewLabel);
 
-        JButton btnNewButton_2 = new JButton("My garderobus");
-        btnNewButton_2.setBounds(34, 459, 522, 270);
-        contentPane.add(btnNewButton_2);
-
-        JButton btnNewButton = new JButton("Add new item");
-        btnNewButton.setBounds(785, 141, 361, 280);
-        contentPane.add(btnNewButton);
-
-        JButton btnNewButton_2_1 = new JButton("Generate outfit"){
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1L;
-
+        JButton generateBtn = new JButton();
+        generateBtn.setForeground(Color.WHITE);
+        generateBtn.setPreferredSize(new Dimension(500, 800)); // Size of the pink area, adjust as needed
+        generateBtn.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        generateBtn.setFocusPainted(false);
+        generateBtn.setContentAreaFilled(false);
+        generateBtn.setUI(new GradientBtn(new Color(145, 189, 234),
+                new Color(82, 140, 208)));
+        generateBtn.setBounds(35, 140, 716, 280);
+        contentPane.add(generateBtn);
+        generateBtn.addActionListener(new ActionListener() {
             @Override
-            protected void paintComponent(Graphics grphcs) {
-                super.paintComponent(grphcs);
-                Graphics2D g2d = (Graphics2D) grphcs;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
-                GradientPaint gp = new GradientPaint(0, getHeight()/2, Color.decode("#528CD0"), getWidth(), getHeight()/2, Color.decode("#B0CEF0"));
-                g2d.setPaint(gp);
-                g2d.fillRect(0, 0, getWidth(), getHeight());
+            public void actionPerformed(ActionEvent e) {
 
             }
+        });
 
-        };
-        btnNewButton_2_1.setBounds(34, 141, 716, 280);
-        contentPane.add(btnNewButton_2_1);
+        JLabel lblNewLabel2 = new JLabel("Add new item");
+        lblNewLabel2.setFont(new Font("Candara", Font.BOLD, 31));
+        lblNewLabel2.setForeground(Color.WHITE);
+        lblNewLabel2.setBounds(825, 150, 410, 112);
+        contentPane.add(lblNewLabel2);
 
-        JButton btnNewButton_1 = new JButton("Saved outfits");
-        btnNewButton_1.setBounds(593, 459, 553, 270);
-        contentPane.add(btnNewButton_1);
+        JButton addItemBtn = new JButton();
+        addItemBtn.setForeground(Color.WHITE);
+        addItemBtn.setPreferredSize(new Dimension(500, 800)); // Size of the pink area, adjust as needed
+        addItemBtn.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        addItemBtn.setFocusPainted(false);
+        addItemBtn.setContentAreaFilled(false);
+        addItemBtn.setUI(new GradientBtn(new Color(255, 221, 135),
+                new Color(252, 197, 56)));
+        addItemBtn.setBounds(785, 140, 361, 280);
+        contentPane.add(addItemBtn);
+        addItemBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddNewFrame addNewFrame = new AddNewFrame();
+                setVisible(false);
+                addNewFrame.setVisible(true);
+            }
+        });
+
+        JLabel lblNewLabel3 = new JLabel("My Garderobus");
+        lblNewLabel3.setFont(new Font("Candara", Font.BOLD, 31));
+        lblNewLabel3.setForeground(Color.WHITE);
+        lblNewLabel3.setBounds(75, 465, 410, 112);
+        contentPane.add(lblNewLabel3);
+
+        JButton gardBtn = new JButton();
+        gardBtn.setForeground(Color.WHITE);
+        gardBtn.setPreferredSize(new Dimension(1000, 800)); // Size of the pink area, adjust as needed
+        gardBtn.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        gardBtn.setFocusPainted(false);
+        gardBtn.setContentAreaFilled(false);
+        gardBtn.setUI(new GradientBtn(new Color(245, 160, 190),
+                new Color(249, 107, 158)));
+        gardBtn.setBounds(35, 455, 511, 280);
+        contentPane.add(gardBtn);
+        gardBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GalleryFrame galleryFrame = new GalleryFrame();
+                setVisible(false);
+                galleryFrame.setVisible(true);
+            }
+        });
+
+        JLabel lblNewLabel4 = new JLabel("Saved outfits");
+        lblNewLabel4.setFont(new Font("Candara", Font.BOLD, 31));
+        lblNewLabel4.setForeground(Color.WHITE);
+        lblNewLabel4.setBounds(630, 465, 410, 112);
+        contentPane.add(lblNewLabel4);
+
+        JButton savedBtn = new JButton();
+        savedBtn.setForeground(Color.WHITE);
+        savedBtn.setPreferredSize(new Dimension(1000, 800)); // Size of the pink area, adjust as needed
+        savedBtn.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        savedBtn.setFocusPainted(false);
+        savedBtn.setContentAreaFilled(false);
+        savedBtn.setUI(new GradientBtn(new Color(253, 185, 123),
+                new Color(250, 141, 41)));
+        savedBtn.setBounds(590, 455, 553, 280);
+        contentPane.add(savedBtn);
+        savedBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
 
     }

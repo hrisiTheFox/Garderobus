@@ -1,3 +1,8 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Item {
     private Occasion occasion;
     private ClothingType type;
@@ -14,6 +19,46 @@ public class Item {
         this.weather = weather;
         this.colour = colour;
         this.photoPath = photoPath;
+    }
+    public static List<Item> readItemsFromFile(String filePath) {
+        List<Item> itemList = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                Item item = parseItemFromLine(line);
+                if (item != null) {
+                    itemList.add(item);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + filePath);
+        }
+
+
+        return itemList;
+    }
+
+    private static Item parseItemFromLine(String line) {
+        String[] parts = line.split(" ");
+        if (parts.length == 5) { // Assuming the format is: occasion,type,weather,colour,photoPath
+            Occasion occasion = Occasion.valueOf(parts[0].trim());
+            ClothingType type = ClothingType.valueOf(parts[1].trim());
+            Weather weather = Weather.valueOf(parts[2].trim());
+            Colour colour = Colour.valueOf(parts[3].trim());
+            String photoPath = parts[4].trim();
+
+            return new Item(occasion, type, weather, colour, photoPath);
+        } else {
+            System.err.println("Invalid line format: " + line);
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return occasion.name() + " " + type.name() + " " +
+                weather.name() + " " + colour.name() + " " + photoPath;
     }
 
     public Occasion getOccasion() {
@@ -56,14 +101,4 @@ public class Item {
         this.photoPath = photoPath;
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "occasion=" + occasion +
-                ", type=" + type +
-                ", weather=" + weather +
-                ", colour=" + colour +
-                ", photoPath=" + photoPath +
-                '}';
-    }
 }

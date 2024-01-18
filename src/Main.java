@@ -1,9 +1,15 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static ArrayList<Item> clothes = new ArrayList<>();
     public static void main(String args[]){
-        AddNewFrame addNewFrame = new AddNewFrame();
+        StartFrame startFrame = new StartFrame();
+        startFrame.setVisible(true);
+        clothes = (ArrayList<Item>) Item.readItemsFromFile("src/clothes.txt");
 //
     }
 
@@ -12,5 +18,14 @@ public class Main {
             System.out.println(item.toString());
         }
         GalleryFrame addNewFrame = new GalleryFrame();
+        try {
+            FileWriter myWriter = new FileWriter("src/clothes.txt");
+            for(Item item : clothes){
+                myWriter.write(item.toString()+"\n");
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

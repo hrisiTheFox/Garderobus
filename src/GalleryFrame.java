@@ -44,9 +44,10 @@ public class GalleryFrame extends JFrame {
         contentPane.setLayout(null);
         contentPane.add(btnNewButton);
 
-        JLabel lblNewLabel = new JLabel("Gallery");
+        JLabel lblNewLabel = new JLabel("Gallery", SwingConstants.CENTER);
         lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-        lblNewLabel.setBounds(10, 11, 244, 29);
+        lblNewLabel.setFont(new Font("Candara", Font.BOLD, 50));
+        lblNewLabel.setBounds(0, 20, 1200, 100);
         contentPane.add(lblNewLabel);
 
         startingPos = 0;
@@ -59,10 +60,10 @@ public class GalleryFrame extends JFrame {
         for(int i = startingPos, pos = 0; i < Main.clothes.size(); i++, pos++){
             JPanel panel = displayPanel(Main.clothes.get(i));
             switch(pos%4){
-                case 0: panel.setBounds(80, 50, 400, 400); break;
-                case 1: panel.setBounds(580, 50, 400, 400); break;
-                case 2: panel.setBounds(80, 550, 400, 400); break;
-                case 3: panel.setBounds(580, 550, 400, 400); break;
+                case 0: panel.setBounds(50, 80, 525, 400); break;
+                case 1: panel.setBounds(625, 80, 525, 400); break;
+                case 2: panel.setBounds(50, 550, 525, 400); break;
+                case 3: panel.setBounds(625, 550, 525, 400); break;
             }
             contentPane.add(panel);
         }
@@ -73,42 +74,54 @@ public class GalleryFrame extends JFrame {
         panel.setLayout(null);
         JLabel lblNewLabel_1 = new JLabel("Type: " + item.getType().toString());
         lblNewLabel_1.setFont(new Font("Candara", Font.PLAIN, 21));
-        lblNewLabel_1.setBounds(200, 25, 200, 40);
+        lblNewLabel_1.setBounds(240, 25, 200, 40);
         panel.add(lblNewLabel_1);
         JLabel lblNewLabel_2 = new JLabel("Color: " + item.getColour().toString());
         lblNewLabel_2.setFont(new Font("Candara", Font.PLAIN, 21));
-        lblNewLabel_2.setBounds(200, 60, 200, 40);
+        lblNewLabel_2.setBounds(240, 60, 200, 40);
         panel.add(lblNewLabel_2);
         JLabel lblNewLabel_3 = new JLabel("Occasion: " + item.getOccasion().toString());
         lblNewLabel_3.setFont(new Font("Candara", Font.PLAIN, 21));
-        lblNewLabel_3.setBounds(200, 95, 200, 40);
+        lblNewLabel_3.setBounds(240, 95, 200, 40);
         panel.add(lblNewLabel_3);
         JLabel lblNewLabel_4 = new JLabel("Weather: " + item.getWeather().toString());
         lblNewLabel_4.setFont(new Font("Candara", Font.PLAIN, 21));
-        lblNewLabel_4.setBounds(200, 130, 200, 40);
+        lblNewLabel_4.setBounds(240, 130, 200, 40);
         panel.add(lblNewLabel_4);
 
 
         BufferedImage bimg = null;
         try {
-            bimg = ImageIO.read(new File(item.getPhotoPath()));
+            bimg = ImageIO.read(new File("resources/"+item.getPhotoPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
         int width          = bimg.getWidth();
         int height         = bimg.getHeight();
-        ImageIcon imageIcon = new ImageIcon(item.getPhotoPath()); // load the image to a imageIcon
+        ImageIcon imageIcon = new ImageIcon("resources/"+item.getPhotoPath()); // load the image to a imageIcon
         Image image = imageIcon.getImage(); // transform it
         Image newimg = image;
-        if(width<height)
+        if(width>height)
             newimg = image.getScaledInstance(150, Math.round(height*150/width),  Image.SCALE_DEFAULT);
         else
-            newimg = image.getScaledInstance(Math.round(width*200/height), 200,  Image.SCALE_DEFAULT);
+            newimg = image.getScaledInstance(Math.round(width*150/height), 150,  Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(newimg);
 
         JLabel imageLabel = new JLabel(imageIcon);
-        imageLabel.setBounds(0, 0, 200, 200);
+        imageLabel.setBounds(45, 25, 150, 150);
         panel.add(imageLabel);
+
+        JButton button = new JButton();
+        button.setForeground(Color.WHITE);
+        button.setPreferredSize(new Dimension(1000, 800)); // Size of the pink area, adjust as needed
+        button.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.setUI(new GradientBtn(new Color(243, 225, 231),
+                new Color(203, 179, 186)));
+        button.setBounds(0, 0, 510, 200);
+        contentPane.add(button);
+        panel.add(button);
         return panel;
     }
 }

@@ -4,8 +4,7 @@ public enum ClothingType {
     SKIRT,
     SHOES,
     DRESS,
-    OUTWEAR,
+    TANK_TOP,
     ACCESSORIES,
-    LEGGINGS,
-    TANK_TOP
+    LEGGINGS
 }
