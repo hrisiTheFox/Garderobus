@@ -7,7 +7,9 @@ import java.util.List;
 public class Main {
     public static ArrayList<Item> clothes = new ArrayList<>();
     public static void main(String args[]){
-        StartFrame startFrame = new StartFrame();
+        //StartFrame startFrame = new StartFrame();
+        //startFrame.setVisible(true);
+        Characteristics startFrame = new Characteristics();
         startFrame.setVisible(true);
         clothes = (ArrayList<Item>) Item.readItemsFromFile("src/clothes.txt");
 //
