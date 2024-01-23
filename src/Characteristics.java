@@ -38,7 +38,7 @@ public class Characteristics extends JFrame {
         pinkButton.setFont(new Font("Arial", Font.BOLD, 16));
         pinkButton.setForeground(Color.WHITE);
         pinkButton.setPreferredSize(new Dimension(500, 800)); // Size of the pink area, adjust as needed
-        //pinkButton.setBorder(new RoundedBorder(30)); // Rounded border with a radius
+        pinkButton.setBorder(new RoundedBorder(30)); // Rounded border with a radius
         pinkButton.setFocusPainted(false);
         pinkButton.setContentAreaFilled(false);
         pinkButton.setUI(new GradientBtn(new Color(255, 182, 193),
