@@ -98,9 +98,8 @@ public class StartFrame extends JFrame {
         addItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddNewFrame addNewFrame = new AddNewFrame();
                 setVisible(false);
-                addNewFrame.setVisible(true);
+                Main.startCharacteristics();
             }
         });
 
@@ -123,9 +122,8 @@ public class StartFrame extends JFrame {
         gardBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GalleryFrame galleryFrame = new GalleryFrame();
                 setVisible(false);
-                galleryFrame.setVisible(true);
+                Main.startGalleryFrame();
             }
         });
 

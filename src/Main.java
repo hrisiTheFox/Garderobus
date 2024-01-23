@@ -7,19 +7,14 @@ import java.util.List;
 public class Main {
     public static ArrayList<Item> clothes = new ArrayList<>();
     public static void main(String args[]){
-        //StartFrame startFrame = new StartFrame();
-        //startFrame.setVisible(true);
-        Characteristics startFrame = new Characteristics();
-        startFrame.setVisible(true);
+        startStartFrame();
+//        Characteristics startFrame = new Characteristics();
+//        startFrame.setVisible(true);
         clothes = (ArrayList<Item>) Item.readItemsFromFile("src/clothes.txt");
 //
     }
 
-    public static void displayClothes(){
-        for(Item item : clothes){
-            System.out.println(item.toString());
-        }
-        GalleryFrame addNewFrame = new GalleryFrame();
+    public static void saveClothes(){
         try {
             FileWriter myWriter = new FileWriter("src/clothes.txt");
             for(Item item : clothes){
@@ -29,5 +24,18 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void startStartFrame(){
+        StartFrame startFrame = new StartFrame();
+        startFrame.setVisible(true);
+    }
+    public static void startCharacteristics(){
+        Characteristics startFrame = new Characteristics();
+        startFrame.setVisible(true);
+    }
+    public static void startGalleryFrame(){
+        GalleryFrame startFrame = new GalleryFrame();
+        startFrame.setVisible(true);
     }
 }

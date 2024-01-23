@@ -22,6 +22,8 @@ public class Characteristics extends JFrame {
     private static Path resourceDirectory = Paths.get("resources");
     private static String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
+
+    JButton btnNewButton = new JButton("Add item");
     private Item newitem;
 
     public Characteristics() {
@@ -72,6 +74,9 @@ public class Characteristics extends JFrame {
                         imageIcon = new ImageIcon(newimg);
                         pinkButton.setUI(new BasicButtonUI());
                         pinkButton.setIcon( imageIcon );
+
+                        btnNewButton.setEnabled(true);
+                        btnNewButton.setBackground(new Color(0, 0, 128));
                     } catch (Exception ex) {
                         // TODO Auto-generated catch block
                         ex.printStackTrace();
@@ -121,14 +126,23 @@ public class Characteristics extends JFrame {
         chckbxNewCheckBox_2.setName("BEIGE");
         colorCB.add(chckbxNewCheckBox_2);
 
-        JButton btnNewButton = new JButton("Add item");
+        btnNewButton = new JButton("Add item");
         btnNewButton.setForeground(new Color(240, 248, 255));
-        btnNewButton.setBackground(new Color(0, 0, 128));
         btnNewButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnNewButton.setFont(new Font("Candara", Font.PLAIN, 25));
         btnNewButton.setBounds(618, 747, 450, 63);
         contentPane.add(btnNewButton);
         btnNewButton.setEnabled(false);
+        btnNewButton.setBackground(new Color(128, 128, 128));
+        btnNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.clothes.add(newitem);
+                Main.saveClothes();
+                setVisible(false);
+                Main.startStartFrame();
+            }
+        });
 
         JCheckBox chckbxNewCheckBox_3 = new JCheckBox("blue");
         chckbxNewCheckBox_3.setFont(new Font("Candara", Font.PLAIN, 20));

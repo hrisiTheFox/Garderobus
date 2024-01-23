@@ -35,14 +35,7 @@ public class GalleryFrame extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        JButton btnNewButton = new JButton("Back");
-        btnNewButton.setBounds(10, 789, 344, 61);
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         contentPane.setLayout(null);
-        contentPane.add(btnNewButton);
 
         JLabel lblNewLabel = new JLabel("Gallery", SwingConstants.CENTER);
         lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -53,17 +46,39 @@ public class GalleryFrame extends JFrame {
         startingPos = 0;
         displayClothes();
 
+        JButton btnNewButton = new JButton("Back");
+        btnNewButton.setBounds(50, 740, 525, 60);
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                startingPos -=2;
+                if(startingPos < 0) startingPos += Main.clothes.size();
+            }
+        });
+        contentPane.add(btnNewButton);
+
+        JButton btnNewButton2 = new JButton("Next");
+        btnNewButton2.setBounds(625, 740, 525, 60);
+        btnNewButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                startingPos +=2;
+                if(startingPos >= Main.clothes.size()) startingPos -= Main.clothes.size();
+            }
+        });
+        contentPane.add(btnNewButton2);
+
         setVisible(true);
     }
 
     void displayClothes(){
-        for(int i = startingPos, pos = 0; i < Main.clothes.size(); i++, pos++){
-            JPanel panel = displayPanel(Main.clothes.get(i));
-            switch(pos%4){
-                case 0: panel.setBounds(50, 80, 525, 400); break;
-                case 1: panel.setBounds(625, 80, 525, 400); break;
-                case 2: panel.setBounds(50, 550, 525, 400); break;
-                case 3: panel.setBounds(625, 550, 525, 400); break;
+        for(int i = startingPos, pos = 0; i < startingPos + 6; i++, pos++){
+            JPanel panel = displayPanel(Main.clothes.get(i%Main.clothes.size()));
+            switch(pos){
+                case 0: panel.setBounds(50, 80, 525, 200); break;
+                case 1: panel.setBounds(625, 80, 525, 200); break;
+                case 2: panel.setBounds(50, 300, 525, 200); break;
+                case 3: panel.setBounds(625, 300, 525, 200); break;
+                case 4: panel.setBounds(50, 520, 525, 200); break;
+                case 5: panel.setBounds(625, 520, 525, 200); break;
             }
             contentPane.add(panel);
         }
@@ -89,6 +104,8 @@ public class GalleryFrame extends JFrame {
         lblNewLabel_4.setBounds(240, 130, 200, 40);
         panel.add(lblNewLabel_4);
 
+        panel.setBackground(new Color(243, 225, 231));
+
 
         BufferedImage bimg = null;
         try {
@@ -110,18 +127,6 @@ public class GalleryFrame extends JFrame {
         JLabel imageLabel = new JLabel(imageIcon);
         imageLabel.setBounds(45, 25, 150, 150);
         panel.add(imageLabel);
-
-        JButton button = new JButton();
-        button.setForeground(Color.WHITE);
-        button.setPreferredSize(new Dimension(1000, 800)); // Size of the pink area, adjust as needed
-        button.setBorder(new RoundedBorder(30)); // Rounded border with a radius
-        button.setFocusPainted(false);
-        button.setContentAreaFilled(false);
-        button.setUI(new GradientBtn(new Color(243, 225, 231),
-                new Color(203, 179, 186)));
-        button.setBounds(0, 0, 510, 200);
-        contentPane.add(button);
-        panel.add(button);
         return panel;
     }
 }
