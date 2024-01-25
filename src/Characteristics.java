@@ -27,6 +27,7 @@ public class Characteristics extends JFrame {
     private Item newitem;
 
     public Characteristics() {
+        setTitle("Add new item");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1200, 900);
         contentPane = new JPanel();

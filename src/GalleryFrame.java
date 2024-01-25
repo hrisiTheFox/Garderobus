@@ -28,6 +28,7 @@ public class GalleryFrame extends JFrame {
     JButton savedBtn, savedBtn2;
 
     public GalleryFrame() {
+        setTitle("Gallery");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1200, 900);
         contentPane = new JPanel();
