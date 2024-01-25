@@ -59,7 +59,6 @@ public class GalleryFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 startingPos -=2;
                 if(startingPos < 0) startingPos += Main.clothes.size();
-                System.out.println(startingPos);
                 displayClothes();
             }
         });
@@ -104,8 +103,6 @@ public class GalleryFrame extends JFrame {
     }
 
     void displayClothes(){
-        System.out.println(Main.clothes.size());
-        System.out.println(startingPos);
         clothesPanel.removeAll();
         if(Main.clothes.size()<=6){
             for(int i = 0; i < Main.clothes.size(); i++){
@@ -137,6 +134,8 @@ public class GalleryFrame extends JFrame {
                 clothesPanel.add(panel);
             }
         }
+        clothesPanel.revalidate();
+        clothesPanel.repaint();
     }
 
     JPanel displayPanel(Item item){
