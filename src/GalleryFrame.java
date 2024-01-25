@@ -22,17 +22,11 @@ import javax.swing.JList;
 public class GalleryFrame extends JFrame {
 
     private JPanel contentPane;
+    private JPanel clothesPanel;
     private int startingPos;
 
     JButton savedBtn, savedBtn2;
 
-    /**
-     * Launch the application.
-     */
-
-    /**
-     * Create the frame.
-     */
     public GalleryFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1200, 900);
@@ -47,6 +41,12 @@ public class GalleryFrame extends JFrame {
         lblNewLabel.setBounds(0, 20, 1200, 100);
         contentPane.add(lblNewLabel);
 
+        clothesPanel = new JPanel();
+        clothesPanel.setBounds(0, 20, 1200, 730);
+        clothesPanel.setLayout(null);
+        contentPane.add(clothesPanel);
+
+
         startingPos = 0;
         displayClothes();
 
@@ -59,6 +59,7 @@ public class GalleryFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 startingPos -=2;
                 if(startingPos < 0) startingPos += Main.clothes.size();
+                System.out.println(startingPos);
                 displayClothes();
             }
         });
@@ -103,6 +104,9 @@ public class GalleryFrame extends JFrame {
     }
 
     void displayClothes(){
+        System.out.println(Main.clothes.size());
+        System.out.println(startingPos);
+        clothesPanel.removeAll();
         if(Main.clothes.size()<=6){
             for(int i = 0; i < Main.clothes.size(); i++){
                 JPanel panel = displayPanel(Main.clothes.get(i));
@@ -114,7 +118,7 @@ public class GalleryFrame extends JFrame {
                     case 4: panel.setBounds(50, 520, 525, 200); break;
                     case 5: panel.setBounds(625, 520, 525, 200); break;
                 }
-                contentPane.add(panel);
+                clothesPanel.add(panel);
             }
             savedBtn.setVisible(false);
             savedBtn2.setVisible(false);
@@ -130,7 +134,7 @@ public class GalleryFrame extends JFrame {
                     case 4: panel.setBounds(50, 540, 525, 200); break;
                     case 5: panel.setBounds(625, 540, 525, 200); break;
                 }
-                contentPane.add(panel);
+                clothesPanel.add(panel);
             }
         }
     }

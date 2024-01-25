@@ -257,11 +257,11 @@ public class Characteristics extends JFrame {
         lblNewLabel_4.setBounds(970, 477, 120, 36);
         contentPane.add(lblNewLabel_4);
 
-        JCheckBox chckbxNewCheckBox_17 = new JCheckBox("grey");
+        JCheckBox chckbxNewCheckBox_17 = new JCheckBox("purple");
         chckbxNewCheckBox_17.setFont(new Font("Candara", Font.PLAIN, 20));
         chckbxNewCheckBox_17.setBounds(575, 678, 100, 35);
         contentPane.add(chckbxNewCheckBox_17);
-        chckbxNewCheckBox_17.setName("GREY");
+        chckbxNewCheckBox_17.setName("PURPLE");
         colorCB.add(chckbxNewCheckBox_17);
 
         JCheckBox chckbxNewCheckBox_18 = new JCheckBox("casual");
